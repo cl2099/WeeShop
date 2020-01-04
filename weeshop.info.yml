@@ -39,6 +39,7 @@ dependencies:
   - views_ui
   - tour
   - automated_cron
+  - locale
 
   # Commerce
   - address
@@ -67,6 +68,9 @@ dependencies:
 
   - product_search
   - features_ui
+  - product_adverts
+  - weeshop_service
+  - weeshop_demo
 
 themes:
   - bartik

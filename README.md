@@ -10,14 +10,21 @@
 感谢您的关注，WeeShop的成功离不开您的意见和支持：
 - 马上Star此项目，最好同时Fork此项目，以帮助让更多的人看到此项目。
 - 我们希望听见您的心声，请 [创建issue](https://github.com/weeshop/WeeShop/issues/new) 来表达您的意见。
-- 我们万分欢迎您参与开发，请阅读 [如何加入开发]()。 
+- 我们万分欢迎您参与开发，请阅读 [如何加入开发]()。
 
-<img src="https://github.com/weeshop/documentation/raw/master/docs/screenshot.jpg">
-<img src="https://github.com/weeshop/documentation/raw/master/docs/screenshot3.jpg">
+[WeeShop v1.0.0 beta4 安装过程视频演示](https://www.bilibili.com/video/av79111768/)
+
+<a href="https://www.bilibili.com/video/av79111768/">
+  <img src="https://i1.hdslb.com/bfs/archive/c11af36df397aa86bfc351bbdecb264d0f86b734.jpg_400x300.jpg">
+</a>
+
+
+<img src="https://www.weeshop.org/images/screenshot.jpg">
+<img src="https://www.weeshop.org/images/screenshot3.jpg">
 
 简洁的美观的 UI 界面
 
-<img src="https://github.com/weeshop/documentation/raw/master/docs/screenshot2.png">
+<img src="https://www.weeshop.org/images/screenshot2.png">
 
 支持使用 `Apache Solr` 集群对商品进行`全文检索`，支持使用属性进行`分面搜索`，支持对搜索结果进行预提示。
 
@@ -26,8 +33,8 @@
 微信小程序商城是以本工程作为服务端进行开发的。
 
 ## 文档
-- [用户指南](docs/user-guide/index.md)
-- [开发者指南](docs/dev-guide/index.md)
+- [用户指南](https://www.weeshop.org/)
+- [开发者指南](https://www.weeshop.org/)
 
 ## 特性
 - 灵活的商品属性系统，可表达任意类型的商品，包括虚拟商品。
@@ -46,7 +53,7 @@
 本项目支持用 Composer 创建工程，使用下面的命令，会在当前目录下创建一个 `myshop` 目录，并在其中下载 WeeShop 相关的代码，包括它们的依赖：
 
 ```bash
-composer create-project weeshop/project-base myshop --stability dev --no-interaction
+composer create-project weeshop/project-base:dev-8.x-1.x WeeShop --stability dev --no-interaction -vvv
 ```
 
 这条命令实际上是简单地下载 WeeShop 模板工程仓库 [weeshop/project-base](https://github.com/weeshop/project-base) 的代码，
@@ -60,7 +67,7 @@ composer create-project weeshop/project-base myshop --stability dev --no-interac
 
 如果docker镜像下载慢，请自行了解 [如何加速docker镜像下载](https://www.baidu.com/s?wd=docker%E5%8A%A0%E9%80%9F)
 
-如果不希望使用 docker 快速安装，也可以参考 [通过传统的手工方式安装](docs/install.md)
+如果不希望使用 docker 快速安装，也可以参考 [通过传统的手工方式安装](https://www.weeshop.org/user_guide/install.html)
 
 先决条件：
 - 确保本机8080端口没有被占用。这是因为 `docker-compose.yml` 中需要映射 Web 容器的 80 端口到物理机的 8080 端口。
@@ -68,18 +75,34 @@ composer create-project weeshop/project-base myshop --stability dev --no-interac
 ```bash
 # 启动docker容器
 docker-compose up -d
+```
 
+#### 安装方式一：使用图形界面
+
+这时你可以访问 `http://localhost:8080`，打开图形安装界面根据提示输入信息进行安装：
+- 主机: db
+- 端口：3306
+- 用户：root
+- 密码：123
+- 数据库：weeshop
+
+
+#### 安装方式二：使用命令行
+
+如果你喜欢用命令行的方式，你可以使用下面的命令行来安装
+
+```bash
 # 进入docker容器
 docker-compose exec web bash
 
 # 进入容器后，在容器内继续运行下面的命令
-# 安装实例
+# 安装实例， account-name 和 account-pass 分别是登录后台的用户名和密码
 su - application -c \
-"cd /app/web/sites && /usr/local/bin/drupal site:install  --force --no-interaction weeshop  \
+"cd /app/web/sites && /usr/local/bin/drupal site:install --force --no-interaction weeshop  \
 --langcode='en'  \
 --db-type='mysql'  \
 --db-host='db'  \
---db-name='drupal'  \
+--db-name='weeshop'  \
 --db-user='root'  \
 --db-pass='123'  \
 --db-port='3306'  \
@@ -97,10 +120,13 @@ su - application -c "cd /app/web/sites && \
 
 浏览器访问 `http://localhost:8080`，开始体验吧！
 
+#### 登录管理后台
 
-## 重要Issuse 
+安装完成后，通过 `http://localhost:8080/user/login` 登录后台。
+
+## 重要Issuse
 - Docker for windows, volume默认权限是755，而无法更改 [#issues39](https://github.com/docker/for-win/issues/39)
-  
+
   - 解决办法，使用Mac或Linux系统
   - 在 `docker-compose.yml` 中把 `/app/web/sites` 目录的volume注掉，让文件留在容器内
 
